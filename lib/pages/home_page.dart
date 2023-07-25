@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:muscle_project/widgets/workout_viewer.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -9,11 +10,7 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Home Page'),
       ),
-      body: const Center(
-        child: Text(
-          'Home Page',
-        )
-      ),
+      body: const WorkoutViewer(),
     );
   }
 }

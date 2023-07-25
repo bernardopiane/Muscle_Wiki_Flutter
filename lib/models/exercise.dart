@@ -33,37 +33,61 @@ class Exercise {
         details = json['details'] as String?,
         exerciseName = json['exercise_name'] as String?,
         id = json['id'] as int?,
-        steps = (json['steps'] as List?)?.map((dynamic e) => e as String).toList(),
-        target = (json['target'] as Map<String,dynamic>?) != null ? Target.fromJson(json['target'] as Map<String,dynamic>) : null,
-        videoURL = (json['videoURL'] as List?)?.map((dynamic e) => e as String).toList(),
+        steps =
+            (json['steps'] as List?)?.map((dynamic e) => e as String).toList(),
+        target = (json['target'] as Map<String, dynamic>?) != null
+            ? Target.fromJson(json['target'] as Map<String, dynamic>)
+            : null,
+        videoURL = (json['videoURL'] as List?)
+            ?.map((dynamic e) => e as String)
+            .toList(),
         youtubeURL = json['youtubeURL'] as String?;
 
   Map<String, dynamic> toJson() => {
-    'Category' : category,
-    'Difficulty' : difficulty,
-    'Force' : force,
-    'Grips' : grips,
-    'details' : details,
-    'exercise_name' : exerciseName,
-    'id' : id,
-    'steps' : steps,
-    'target' : target?.toJson(),
-    'videoURL' : videoURL,
-    'youtubeURL' : youtubeURL
-  };
+        'Category': category,
+        'Difficulty': difficulty,
+        'Force': force,
+        'Grips': grips,
+        'details': details,
+        'exercise_name': exerciseName,
+        'id': id,
+        'steps': steps,
+        'target': target?.toJson(),
+        'videoURL': videoURL,
+        'youtubeURL': youtubeURL
+      };
 }
 
 class Target {
   final List<String>? primary;
+  final List<String>? secondary;
+  final List<String>? tertiary;
 
   Target({
     this.primary,
+    this.secondary,
+    this.tertiary,
   });
 
-  Target.fromJson(Map<String, dynamic> json)
-      : primary = (json['Primary'] as List?)?.map((dynamic e) => e as String).toList();
+  // Method to convert Target object to a JSON map
+  Map<String, dynamic> toJson() {
+    return {
+      'Primary': primary,
+      'Secondary': secondary,
+      'Tertiary': tertiary,
+    };
+  }
 
-  Map<String, dynamic> toJson() => {
-    'Primary' : primary
-  };
+  // Factory method to create a Target object from a JSON map
+  factory Target.fromJson(Map<String, dynamic> json) {
+    return Target(
+      primary:
+          json['Primary'] != null ? List<String>.from(json['Primary']) : null,
+      secondary: json['Secondary'] != null
+          ? List<String>.from(json['Secondary'])
+          : null,
+      tertiary:
+          json['Tertiary'] != null ? List<String>.from(json['Tertiary']) : null,
+    );
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:muscle_project/pages/regime_page.dart';
 import 'package:muscle_project/widgets/workout_viewer.dart';
 
 class HomePage extends StatelessWidget {
@@ -10,7 +11,19 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Home Page'),
       ),
-      body: const WorkoutViewer(),
+      body: Column(
+        children: [
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const RegimePage()),
+                );
+              },
+              child: const Text("Regime Page")),
+          const Expanded(child: WorkoutViewer()),
+        ],
+      ),
     );
   }
 }

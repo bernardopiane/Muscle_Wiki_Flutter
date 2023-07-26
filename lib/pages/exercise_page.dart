@@ -12,14 +12,18 @@ class ExercisePage extends StatelessWidget {
         title: Text(exercise.exerciseName.toString()),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(exercise.exerciseName.toString()),
-          Text(exercise.category.toString()),
-          Text(exercise.difficulty.toString()),
-          Text(exercise.force.toString()),
-          Text(exercise.grips.toString()),
-          Text("Target : ${exercise.target!.primary.toString()}"),
-          Text(exercise.details.toString()),
+          if (exercise.exerciseName != null)
+            Text(exercise.exerciseName.toString()),
+          if (exercise.category != null) Text(exercise.category.toString()),
+          if (exercise.difficulty != null) Text(exercise.difficulty.toString()),
+          if (exercise.force != null) Text(exercise.force.toString()),
+          if (exercise.grips != null) Text(exercise.grips.toString()),
+          if (exercise.target != null && exercise.target!.primary != null)
+            Text("Target : ${exercise.target!.primary.toString()}"),
+          if (exercise.details != null) Text(exercise.details.toString()),
         ],
       ),
     );

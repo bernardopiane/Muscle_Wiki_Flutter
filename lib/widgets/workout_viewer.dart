@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:muscle_project/globals.dart';
 import 'package:muscle_project/models/exercise.dart';
@@ -15,8 +14,6 @@ class WorkoutViewer extends StatefulWidget {
 }
 
 class WorkoutViewerState extends State<WorkoutViewer> {
-  final dio = Dio();
-
   List<Workout>? workouts = [];
   List<Exercise>? exercises = [];
 

@@ -24,8 +24,6 @@ class _RegimePageState extends State<RegimePage>
     'Sunday'
   ];
 
-  final Regime regime = Regime();
-
   late final TabController _tabController;
 
   @override
@@ -67,21 +65,8 @@ class _RegimePageState extends State<RegimePage>
         return TabBarView(
           controller: _tabController,
           children: daysOfWeek.map((day) {
-            if (regime.exerciseSchedule![day]!.isEmpty) {
-              return const Center(
-                child: Text("Nothing Scheduled"),
-              );
-            }
-            return ListView.builder(
-              itemCount: regime.exerciseSchedule![day]!.length,
-              itemBuilder: (context, index) {
-                Exercise exercise = regime.exerciseSchedule![day]![index];
-                return ListTile(
-                  title: Text(exercise.exerciseName.toString()),
-                  // Add other details of the exercise here if needed
-                );
-              },
-            );
+            List<Exercise> exercises = regime.exerciseSchedule![day] ?? [];
+            return ExerciseList(exercises: exercises);
           }).toList(),
         );
       }),
@@ -91,5 +76,25 @@ class _RegimePageState extends State<RegimePage>
   itemClick(Exercise e) {
     Provider.of<Regime>(context, listen: false)
         .addExerciseForDay(daysOfWeek.elementAt(_tabController.index), e);
+  }
+}
+
+class ExerciseList extends StatelessWidget {
+  final List<Exercise> exercises;
+
+  const ExerciseList({super.key, required this.exercises});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: exercises.length,
+      itemBuilder: (context, index) {
+        Exercise exercise = exercises[index];
+        return ListTile(
+          title: Text(exercise.exerciseName.toString()),
+          // Add other details of the exercise here if needed
+        );
+      },
+    );
   }
 }

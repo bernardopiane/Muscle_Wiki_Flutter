@@ -7,7 +7,8 @@ import 'package:muscle_project/widgets/exercise_list_tile.dart';
 import '../models/workout.dart';
 
 class WorkoutViewer extends StatefulWidget {
-  const WorkoutViewer({Key? key}) : super(key: key);
+  const WorkoutViewer({Key? key, this.parentListener}) : super(key: key);
+  final Function? parentListener;
 
   @override
   WorkoutViewerState createState() => WorkoutViewerState();
@@ -40,7 +41,7 @@ class WorkoutViewerState extends State<WorkoutViewer> {
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
               Exercise exercise = snapshot.data![index];
-              return ExerciseListTile(exercise: exercise);
+              return ExerciseListTile(exercise: exercise, parentListener: widget.parentListener,);
             },
           );
         } else {

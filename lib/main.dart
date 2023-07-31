@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:muscle_project/models/regime.dart';
 import 'package:muscle_project/pages/home_page.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => Regime(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

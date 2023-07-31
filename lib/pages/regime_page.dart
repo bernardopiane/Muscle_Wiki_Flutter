@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:muscle_project/widgets/workout_viewer.dart';
+import 'package:provider/provider.dart';
 
 import '../models/exercise.dart';
 import '../models/regime.dart';
@@ -21,6 +23,7 @@ class _RegimePageState extends State<RegimePage>
     'Saturday',
     'Sunday'
   ];
+
   final Regime regime = Regime();
 
   late final TabController _tabController;
@@ -51,33 +54,42 @@ class _RegimePageState extends State<RegimePage>
             MaterialPageRoute(
               builder: (context) => Scaffold(
                 body: Center(
-                  child: Text(_tabController.index.toString()),
+                  child: WorkoutViewer(
+                    parentListener: itemClick,
+                  ),
                 ),
               ),
             ),
           );
         },
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: daysOfWeek.map((day) {
-          if (regime.exerciseSchedule![day]!.isEmpty) {
-            return const Center(
-              child: Text("Nothing Scheduled"),
-            );
-          }
-          return ListView.builder(
-            itemCount: regime.exerciseSchedule![day]!.length,
-            itemBuilder: (context, index) {
-              Exercise exercise = regime.exerciseSchedule![day]![index];
-              return ListTile(
-                title: Text(exercise.exerciseName.toString()),
-                // Add other details of the exercise here if needed
+      body: Consumer<Regime>(builder: (context, regime, child) {
+        return TabBarView(
+          controller: _tabController,
+          children: daysOfWeek.map((day) {
+            if (regime.exerciseSchedule![day]!.isEmpty) {
+              return const Center(
+                child: Text("Nothing Scheduled"),
               );
-            },
-          );
-        }).toList(),
-      ),
+            }
+            return ListView.builder(
+              itemCount: regime.exerciseSchedule![day]!.length,
+              itemBuilder: (context, index) {
+                Exercise exercise = regime.exerciseSchedule![day]![index];
+                return ListTile(
+                  title: Text(exercise.exerciseName.toString()),
+                  // Add other details of the exercise here if needed
+                );
+              },
+            );
+          }).toList(),
+        );
+      }),
     );
+  }
+
+  itemClick(Exercise e) {
+    Provider.of<Regime>(context, listen: false)
+        .addExerciseForDay(daysOfWeek.elementAt(_tabController.index), e);
   }
 }

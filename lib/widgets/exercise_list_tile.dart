@@ -4,7 +4,10 @@ import 'package:muscle_project/pages/exercise_page.dart';
 
 class ExerciseListTile extends StatelessWidget {
   final Exercise exercise;
-  const ExerciseListTile({Key? key, required this.exercise}) : super(key: key);
+  final Function? parentListener;
+  const ExerciseListTile(
+      {Key? key, required this.exercise, this.parentListener})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +17,16 @@ class ExerciseListTile extends StatelessWidget {
     return Card(
       child: InkWell(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ExercisePage(exercise: exercise)),
-          );
+          if (parentListener != null) {
+            parentListener!(exercise);
+            Navigator.pop(context);
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ExercisePage(exercise: exercise)),
+            );
+          }
         },
         child: Column(
           children: [

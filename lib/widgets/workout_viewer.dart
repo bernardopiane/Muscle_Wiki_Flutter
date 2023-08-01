@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:muscle_project/globals.dart';
 import 'package:muscle_project/models/exercise.dart';
 import 'package:muscle_project/widgets/exercise_list_tile.dart';
-
-import '../models/workout.dart';
+import 'package:muscle_project/widgets/filtered_list_view.dart';
 
 class WorkoutViewer extends StatefulWidget {
   const WorkoutViewer({Key? key, this.parentListener}) : super(key: key);
@@ -14,9 +13,6 @@ class WorkoutViewer extends StatefulWidget {
 }
 
 class WorkoutViewerState extends State<WorkoutViewer> {
-  List<Workout>? workouts = [];
-  List<Exercise>? exercises = [];
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Exercise>>(
@@ -34,13 +30,19 @@ class WorkoutViewerState extends State<WorkoutViewer> {
           );
         } else if (snapshot.hasData && snapshot.data != null) {
           // If data is available, display the list of exercises
-          return ListView.builder(
-            itemCount: snapshot.data!.length,
-            itemBuilder: (context, index) {
-              Exercise exercise = snapshot.data![index];
-              return ExerciseListTile(exercise: exercise, parentListener: widget.parentListener,);
-            },
-          );
+
+          return FilteredListView(dataList: snapshot.data!);
+
+          // return ListView.builder(
+          //   itemCount: snapshot.data!.length,
+          //   itemBuilder: (context, index) {
+          //     Exercise exercise = snapshot.data![index];
+          //     return ExerciseListTile(
+          //       exercise: exercise,
+          //       parentListener: widget.parentListener,
+          //     );
+          //   },
+          // );
         } else {
           // If there's no data, show a message indicating no exercises found
           return const Center(

@@ -53,9 +53,18 @@ class Regime extends ChangeNotifier {
   void addExerciseForDay(String day, Exercise exercise) {
     try {
       if (exerciseSchedule!.containsKey(day)) {
-        exerciseSchedule![day]!.add(exercise);
-        _saveExerciseSchedule();
-        notifyListeners();
+        // Check if the exercise with the same exerciseName already exists in the list
+        if (exerciseSchedule![day]!.any((existingExercise) =>
+            existingExercise.exerciseName == exercise.exerciseName)) {
+          // Notify the user that the exercise is already added for the selected day
+          Fluttertoast.showToast(
+              msg:
+                  'Exercise "${exercise.exerciseName}" already added for $day');
+        } else {
+          exerciseSchedule![day]!.add(exercise);
+          _saveExerciseSchedule();
+          notifyListeners();
+        }
       } else {
         throw Exception('Invalid day: $day');
       }

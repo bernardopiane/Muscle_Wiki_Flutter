@@ -30,7 +30,7 @@ class WorkoutViewerState extends State<WorkoutViewer> {
         } else if (snapshot.hasData && snapshot.data != null) {
           // If data is available, display the list of exercises
 
-          return FilteredListView(dataList: snapshot.data!);
+          return FilteredListView(dataList: snapshot.data!, parentListener: widget.parentListener,);
 
           // return ListView.builder(
           //   itemCount: snapshot.data!.length,

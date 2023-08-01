@@ -51,10 +51,15 @@ class _RegimePageState extends State<RegimePage>
             context,
             MaterialPageRoute(
               builder: (context) => Scaffold(
+                appBar: AppBar(title: Text("Add exercise for ${daysOfWeek[_tabController.index]}"),),
                 body: Center(
                   child: WorkoutViewer(
                     parentListener: itemClick,
                   ),
+                  // child: WorkoutViewer(
+                  //   parentListener: itemClick,
+                  // ),
+
                 ),
               ),
             ),

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:muscle_project/models/exercise.dart';
+import 'package:muscle_project/widgets/exercise_list_tile.dart';
 
 class FilteredListView extends StatefulWidget {
   final List<Exercise> dataList;
-  const FilteredListView({Key? key, required this.dataList}) : super(key: key);
+  final Function? parentListener;
+  const FilteredListView({Key? key, required this.dataList, this.parentListener}) : super(key: key);
 
   @override
   FilteredListViewState createState() => FilteredListViewState();
@@ -140,10 +142,7 @@ class FilteredListViewState extends State<FilteredListView> {
             itemCount: filteredData.length,
             itemBuilder: (context, index) {
               // Build the list item using the filtered data
-              return ListTile(
-                title: Text(filteredData[index].exerciseName.toString()),
-                // Customize other details of the list item as needed
-              );
+              return ExerciseListTile(exercise: filteredData[index], parentListener: widget.parentListener,);
             },
           ),
         ),

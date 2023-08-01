@@ -80,15 +80,20 @@ class FilteredListViewState extends State<FilteredListView> {
               value: category,
               onChanged: (newValue) {
                 setState(() {
-                  category = newValue;
+                  // Check if the selected value is the same as the hint (default value)
+                  // If yes, set the category to null, otherwise set it to the selected value
+                  category = (newValue == "Category") ? null : newValue;
                 });
               },
-              items: categories
-                  ?.map((option) => DropdownMenuItem<String>(
-                        value: option,
-                        child: Text(option),
-                      ))
-                  .toList(),
+              items: [
+                "Category", // Add the hint (default value) as the first item in the list
+                ...categories!,
+              ].map((option) {
+                return DropdownMenuItem<String>(
+                  value: option,
+                  child: Text(option),
+                );
+              }).toList(),
             ),
             const SizedBox(width: 16),
             DropdownButton<String>(
@@ -96,15 +101,18 @@ class FilteredListViewState extends State<FilteredListView> {
               value: difficulty,
               onChanged: (newValue) {
                 setState(() {
-                  difficulty = newValue;
+                  difficulty = (newValue == "Difficulty") ? null : newValue;
                 });
               },
-              items: difficulties
-                  ?.map((option) => DropdownMenuItem<String>(
-                        value: option,
-                        child: Text(option),
-                      ))
-                  .toList(),
+              items: [
+                "Difficulty",
+                ...difficulties!,
+              ].map((option) {
+                return DropdownMenuItem<String>(
+                  value: option,
+                  child: Text(option),
+                );
+              }).toList(),
             ),
             const SizedBox(width: 16),
             DropdownButton<String>(
@@ -112,15 +120,18 @@ class FilteredListViewState extends State<FilteredListView> {
               value: target,
               onChanged: (newValue) {
                 setState(() {
-                  target = newValue;
+                  target = (newValue == "Target") ? null : newValue;
                 });
               },
-              items: targets
-                  ?.map((option) => DropdownMenuItem<String>(
-                        value: option,
-                        child: Text(option),
-                      ))
-                  .toList(),
+              items: [
+                "Target",
+                ...targets!,
+              ].map((option) {
+                return DropdownMenuItem<String>(
+                  value: option,
+                  child: Text(option),
+                );
+              }).toList(),
             ),
           ],
         ),

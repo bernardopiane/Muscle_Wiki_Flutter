@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:muscle_project/globals.dart';
 import 'package:muscle_project/models/exercise.dart';
-import 'package:muscle_project/widgets/exercise_list_tile.dart';
 import 'package:muscle_project/widgets/filtered_list_view.dart';
 
 class WorkoutViewer extends StatefulWidget {

@@ -12,12 +12,10 @@ class FilteredListView extends StatefulWidget {
 class FilteredListViewState extends State<FilteredListView> {
   String? category;
   String? difficulty;
-  String? force;
   String? target;
 
   List<String>? categories;
   List<String>? difficulties;
-  List<String>? forces;
   List<String>? targets;
 
   List<Exercise> get filteredData {
@@ -32,10 +30,6 @@ class FilteredListViewState extends State<FilteredListView> {
     if (difficulty != null) {
       filteredList =
           filteredList.where((item) => item.difficulty == difficulty).toList();
-    }
-
-    if (force != null) {
-      filteredList = filteredList.where((item) => item.force == force).toList();
     }
 
     if (target != null) {
@@ -69,13 +63,6 @@ class FilteredListViewState extends State<FilteredListView> {
         .toList()
         .toSet()
         .toList();
-    forces = widget.dataList
-        .where((exercise) => exercise.force != null)
-        .map((exercise) => exercise.force!)
-        .toList()
-        .toSet()
-        .toList();
-
     //   TARGETS
     extractTargets(widget.dataList);
   }
@@ -84,72 +71,58 @@ class FilteredListViewState extends State<FilteredListView> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              DropdownButton<String>(
-                hint: const Text("Category"),
-                value: category,
-                onChanged: (newValue) {
-                  setState(() {
-                    category = newValue;
-                  });
-                },
-                items: categories
-                    ?.map((option) => DropdownMenuItem<String>(
-                          value: option,
-                          child: Text(option),
-                        ))
-                    .toList(),
-              ),
-              DropdownButton<String>(
-                hint: const Text("Difficulty"),
-                value: difficulty,
-                onChanged: (newValue) {
-                  setState(() {
-                    difficulty = newValue;
-                  });
-                },
-                items: difficulties
-                    ?.map((option) => DropdownMenuItem<String>(
-                          value: option,
-                          child: Text(option),
-                        ))
-                    .toList(),
-              ),
-              DropdownButton<String>(
-                hint: const Text("Force"),
-                value: force,
-                onChanged: (newValue) {
-                  setState(() {
-                    force = newValue;
-                  });
-                },
-                items: forces
-                    ?.map((option) => DropdownMenuItem<String>(
-                          value: option,
-                          child: Text(option),
-                        ))
-                    .toList(),
-              ),
-              DropdownButton<String>(
-                hint: const Text("Target"),
-                value: target,
-                onChanged: (newValue) {
-                  setState(() {
-                    target = newValue;
-                  });
-                },
-                items: targets
-                    ?.map((option) => DropdownMenuItem<String>(
-                          value: option,
-                          child: Text(option),
-                        ))
-                    .toList(),
-              ),
-            ],
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            const SizedBox(width: 16),
+            DropdownButton<String>(
+              hint: const Text("Category"),
+              value: category,
+              onChanged: (newValue) {
+                setState(() {
+                  category = newValue;
+                });
+              },
+              items: categories
+                  ?.map((option) => DropdownMenuItem<String>(
+                        value: option,
+                        child: Text(option),
+                      ))
+                  .toList(),
+            ),
+            const SizedBox(width: 16),
+            DropdownButton<String>(
+              hint: const Text("Difficulty"),
+              value: difficulty,
+              onChanged: (newValue) {
+                setState(() {
+                  difficulty = newValue;
+                });
+              },
+              items: difficulties
+                  ?.map((option) => DropdownMenuItem<String>(
+                        value: option,
+                        child: Text(option),
+                      ))
+                  .toList(),
+            ),
+            const SizedBox(width: 16),
+            DropdownButton<String>(
+              hint: const Text("Target"),
+              value: target,
+              onChanged: (newValue) {
+                setState(() {
+                  target = newValue;
+                });
+              },
+              items: targets
+                  ?.map((option) => DropdownMenuItem<String>(
+                        value: option,
+                        child: Text(option),
+                      ))
+                  .toList(),
+            ),
+          ],
         ),
         Expanded(
           child: ListView.builder(
